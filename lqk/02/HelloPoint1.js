@@ -1,3 +1,6 @@
+// 顶点着色器内置变量
+// vec4 gl_Position 顶点位置 (x,y,z,w) 齐次坐标 等价于(x/w, y/w, z/w) W>0 趋近于0的时候表示的点趋近无穷远
+// float gl_PointSize 点的尺寸(像素数) 必须是0.0浮点数 整形0会报错 类似C语言不带隐示转换
 // vertex shader
 var VSHADER =
     'void main(){ \n' +
@@ -5,6 +8,8 @@ var VSHADER =
     ' gl_PointSize = 10.0;\n' + // 设置尺寸
     '}\n';
 
+// 片元着色器
+// vec4 gl_FragColor 指定片元颜色RGBA
 // fragment shader
 var FSHADER =
     'void main() {\n' +
