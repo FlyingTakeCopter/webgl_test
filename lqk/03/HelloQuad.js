@@ -47,28 +47,19 @@ function main() {
 
     // 绘制三个点
     gl.drawArrays(gl.POINTS, 0, n);
-    gl.drawArrays(gl.LINES, 0, n);      // 单独线段
-    // gl.drawArrays(gl.LINE_STRIP, 0, n);  // 连接的线段，首尾不相连
-    // gl.drawArrays(gl.LINE_LOOP, 0, n);   // 连接的线段，首尾相连
-
-    // gl.drawArrays(gl.TRIANGLES, 0, n);   // 单独的三角形，如果点的个数不是3的倍数，最后剩下的点将被忽略
-    // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);  // 带状三角形 绘制顺序(v0,v1,v2) (v2,v1,v3)
-
-    // gl.drawArrays(gl.TRIANGLE_FAN, 0, n);    // 扇形三角形
+    // gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);  // 带状三角形
+    gl.drawArrays(gl.TRIANGLE_FAN, 0, n);
 }
 
 function initVertexBuffers(gl) {
+    // 逆时针绘制顺序 (v0,v1,v2) (v2,v1,v3)
     var vertices = new Float32Array([
-       -1,      0.5,
-       -0.5,   -0.5,
-       -0.5,    0.5,
-        0,     -0.5,
-        0,      0.5,
+        -0.5,  0.5,
+        -0.5,  -0.5,
+        0.5,   0.5,
         0.5,   -0.5,
-        0.5,    0.5,
-        1,     -0.5
     ]);
-    var n = 8;
+    var n = 4;
 
     // 1.创建缓冲区对象
     var vertexBuffer = gl.createBuffer();
