@@ -5,7 +5,7 @@ var VSHADER =
     'attribute vec4 a_Position;\n' +
     'uniform mat4 u_xformMatrix;\n' +
     'void main(){ \n' +
-    // 绕Y轴旋转
+    // 矩阵乘法前后顺序很重要，结果不同
     ' gl_Position = u_xformMatrix * a_Position;\n' + // 设置坐标
     ' gl_PointSize = 10.0;\n' + // 设置尺寸
     '}\n';
@@ -36,41 +36,20 @@ function main() {
         return;
     }
 
-    // 设置旋转值
-    var rotation = 10;
-    // 绑定u_cos,u_sin
+    // 绑定
     var u_xformMatrix = gl.getUniformLocation(gl.program, 'u_xformMatrix');
+
+    var Tx = 0.0, Ty = 0.0, Tz = 0.0;
 
     // 循环执行
     window.setInterval(function () {
-        // 角度转弧度
-        var rad = Math.PI * rotation / 180.0;
-        var sin = Math.sin(rad);
-        var cos = Math.cos(rad);
-
         // opengl按列主序
-        // 绕Z轴旋转
-        // var rotateMatrix = new Float32Array([
-        //     cos,    sin,    0.0,    0.0,
-        //     -sin,   cos,    0.0,    0.0,
-        //     0.0,    0.0,    1.0,    0.0,
-        //     0.0,    0.0,    0.0,    1.0,
-        // ]);
-
-        // 绕Y轴旋转
-        // var rotateMatrix = new Float32Array([
-        //     cos,    0.0,    sin,    0.0,
-        //     0.0,    1.0,    0.0,    0.0,
-        //     -sin,   0.0,    cos,    0.0,
-        //     0.0,    0.0,    0.0,    1.0,
-        // ]);
-
-        // 绕X轴旋转
+        // 平移
         var rotateMatrix = new Float32Array([
             1.0,    0.0,    0.0,    0.0,
-            0.0,    cos,    sin,    0.0,
-            0.0,   -sin,    cos,    0.0,
-            0.0,    0.0,    0.0,    1.0,
+            0.0,    1.0,    0.0,    0.0,
+            0.0,    0.0,    1.0,    0.0,
+            Tx,     Ty,     Tz,     1.0,
         ]);
 
         // 设置值
@@ -86,16 +65,21 @@ function main() {
         gl.drawArrays(gl.POINTS, 0, n);
         gl.drawArrays(gl.TRIANGLES, 0, n);   // 单独的三角形，如果点的个数不是3的倍数，最后剩下的点将被忽略
 
-        rotation += 5;
-    }, 50);
+        if (Tx >= 1.5){
+            Tx = -1.5;
+        } else {
+            Tx += 0.01;
+        }
+
+    }, 10);
 }
 
 
 function initVertexBuffers(gl) {
     var vertices = new Float32Array([
-        -0.5,   -0.5,
         0,      0.5,
-        0.5,   -0.5,
+        -0.5,   -0.5,
+        0.5,    -0.5
     ]);
     var n = 3;
 
