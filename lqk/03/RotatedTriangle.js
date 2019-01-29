@@ -6,9 +6,19 @@ var VSHADER =
     'uniform float u_sin;\n' +
     'uniform float u_cos;\n' +
     'void main(){ \n' +
-    ' gl_Position.x = a_Position.x * u_cos - a_Position.y * u_sin;\n' + // 设置坐标
-    ' gl_Position.y = a_Position.y * u_cos + a_Position.x * u_sin;\n' + // 设置坐标
-    ' gl_Position.z = a_Position.z;\n' + // 设置坐标
+    // 绕Z轴旋转
+    // ' gl_Position.x = a_Position.x * u_cos - a_Position.y * u_sin;\n' + // 设置坐标
+    // ' gl_Position.y = a_Position.y * u_cos + a_Position.x * u_sin;\n' + // 设置坐标
+    // ' gl_Position.z = a_Position.z;\n' + // 设置坐标
+    // 绕Y轴旋转
+    ' gl_Position.x = a_Position.x * u_cos - a_Position.z * u_sin;\n' + // 设置坐标
+    ' gl_Position.y = a_Position.y;\n' + // 设置坐标
+    ' gl_Position.z = a_Position.z * u_cos + a_Position.x * u_sin;\n' + // 设置坐标
+    // 绕X轴旋转
+    // ' gl_Position.x = a_Position.x;\n' + // 设置坐标
+    // ' gl_Position.y = a_Position.y * u_cos + a_Position.z * u_sin;\n' + // 设置坐标
+    // ' gl_Position.z = a_Position.z * u_cos + a_Position.y * u_sin;\n' + // 设置坐标
+
     ' gl_Position.w = 1.0;\n' + // 设置坐标
     ' gl_PointSize = 10.0;\n' + // 设置尺寸
     '}\n';
